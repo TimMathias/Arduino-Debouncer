@@ -1,8 +1,6 @@
-/*
-  Debouncer for Arduino
-
-  Debounces an input using hysteresis.
-*/
+#pragma once
+#ifndef DEBOUNCER_H
+#define DEBOUNCER_H
 
 #include <util/atomic.h>
 
@@ -62,3 +60,4 @@ public:
     return false;
   }
 };
+#endif /* DEBOUNCER_H */
