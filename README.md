@@ -19,17 +19,17 @@ void setup()
 
 void loop()
 {
-  static Debouncer button_debouncer(BUTTON_PIN, DEBOUNCE_DELAY_ms);
+  static Debouncer button1(BUTTON_PIN, DEBOUNCE_DELAY_ms);
   static bool led_state = false;
 
-  if (button_debouncer.IsDebounced())
+  if (button1.IsDebounced())
   {
     // Update the LED to show the debounced signal.
-    digitalWrite(LED_PIN, button_debouncer.Output());
+    digitalWrite(LED_PIN, button1.Output());
 
     // Alternative feedback: Toggle the LED on the rising edge of the debounced signal.
     /**
-    if (button_debouncer.Rise())
+    if (button1.Rise())
     {
       led_state = !led_state;
       digitalWrite(LED_PIN, led_state);
