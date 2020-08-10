@@ -34,11 +34,15 @@ public:
     unsigned long current_ms;
 
     // Temporarily disable interrupts to ensure an accurate time stamp for the sample.
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+#ifdef ATOMIC_BLOCK
+    ATOMIC_BLOCK( ATOMIC_RESTORESTATE )
     {
+#endif
       input_state = digitalRead(input_pin);  // No interrupt will occur between here...
       current_ms = millis();                 // ...and here, ensuring an accurate time stamp for the sample.
+#ifdef ATOMIC_BLOCK
     }
+#endif
 
     rise = fall = false;
 
