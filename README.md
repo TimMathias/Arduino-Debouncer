@@ -21,6 +21,8 @@ void loop()
 {
   static Debouncer button1(BUTTON_PIN, DEBOUNCE_DELAY_ms);
   static bool led_state = false;
+  
+  button1.Update();
 
   if (button1.IsDebounced())
   {
