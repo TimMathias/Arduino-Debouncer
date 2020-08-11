@@ -57,7 +57,7 @@ public:
 
 private:
 
-  inline void Update_(const int& input_state, unsigned long& current_ms)
+  inline void Update_(const int& input_state, const unsigned long& current_ms)
   {
     is_debounced = rise = fall = false;
 
