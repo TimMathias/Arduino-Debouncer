@@ -59,6 +59,10 @@ const unsigned long DEBOUNCE_DELAY_ms = 50;  // The debounce time in millisecond
 
 void setup()
 {
+  // Set pin modes.
+  pinMode(BUTTON_PIN, INPUT);
+  pinMode(LED_PIN, OUTPUT);
+  
   cli(); // Disable interrupts.
 
   //
