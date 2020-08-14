@@ -13,6 +13,7 @@ private:
   const int INPUT_PIN;
   volatile bool is_debounced;
   volatile bool output_state;
+  volatile bool edge;
   volatile bool rise;
   volatile bool fall;
   const unsigned long DEBOUNCE_DELAY_ms;
@@ -30,6 +31,7 @@ public:
 
   bool IsDebounced() const { return is_debounced; }
   bool Output() const { return output_state; }
+  bool Edge() const { return edge; }
   bool Rise() const { return rise; }
   bool Fall() const { return fall; }
 
@@ -61,7 +63,7 @@ private:
 
   inline void Update_(const int& input_state, const unsigned long& current_ms)
   {
-    is_debounced = rise = fall = false;
+    is_debounced = edge = rise = fall = false;
 
     // Hysteresis:
     //   If there is no change, reset the debounce timer.
@@ -76,6 +78,7 @@ private:
       is_debounced = true;
       rise = input_state && !output_state;
       fall = !input_state && output_state;
+      edge = rise || fall;
       output_state = input_state;
     }
   }
