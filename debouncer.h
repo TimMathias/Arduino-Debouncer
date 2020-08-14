@@ -4,7 +4,7 @@
 
 #ifdef __AVR__
 #include <util/atomic.h>
-##endif
+#endif
 
 class Debouncer
 {
