@@ -100,5 +100,22 @@ ISR(TIMER0_COMPA_vect)
   }
 }
 ```
+#### Either Edge Detector
+```c++
+ISR(TIMER0_COMPA_vect)
+{
+  static Debouncer button1(BUTTON_PIN, DEBOUNCE_DELAY_ms);
+  static bool led_state = false;
+  
+  button1.UpdateISR();
+  
+  // Toggle the LED on either edge of the debounced signal.
+  if (button1.Edge())
+  {
+    led_state = !led_state;
+    digitalWrite(LED_PIN, led_state);
+  }
+}
+```
 ## Licence
 MIT
