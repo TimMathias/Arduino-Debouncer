@@ -2,7 +2,9 @@
 #ifndef DEBOUNCER_H
 #define DEBOUNCER_H
 
+#ifdef __AVR__
 #include <util/atomic.h>
+##endif
 
 class Debouncer
 {
