@@ -26,14 +26,82 @@ public:
       INPUT_PIN(INPUT_PIN),
       DEBOUNCE_DELAY_ms(DEBOUNCE_DELAY_ms)
   {
+    this->is_debounced = false;
     this->output_state = false;
+    this->edge = false;
+    this->rise = false;
+    this->fall = false;
   }
 
-  bool IsDebounced() const { return is_debounced; }
-  bool Output() const { return output_state; }
-  bool Edge() const { return edge; }
-  bool Rise() const { return rise; }
-  bool Fall() const { return fall; }
+  bool IsDebounced() const
+  {
+    bool copy;
+#ifdef ATOMIC_BLOCK
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+    {
+#endif
+      copy = is_debounced;
+#ifdef ATOMIC_BLOCK
+    }
+#endif
+    return copy;
+  }
+
+  bool Output() const
+  {
+    bool copy;
+#ifdef ATOMIC_BLOCK
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+    {
+#endif
+      copy = output_state;
+#ifdef ATOMIC_BLOCK
+    }
+#endif
+    return copy;
+  }
+
+  bool Edge() const
+  {
+    bool copy;
+#ifdef ATOMIC_BLOCK
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+    {
+#endif
+      copy = edge;
+#ifdef ATOMIC_BLOCK
+    }
+#endif
+    return copy;
+  }
+
+  bool Rise() const
+  {
+    bool copy;
+#ifdef ATOMIC_BLOCK
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+    {
+#endif
+      copy = rise;
+#ifdef ATOMIC_BLOCK
+    }
+#endif
+    return copy;
+  }
+
+  bool Fall() const
+  {
+    bool copy;
+#ifdef ATOMIC_BLOCK
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+    {
+#endif
+      copy = fall;
+#ifdef ATOMIC_BLOCK
+    }
+#endif
+    return copy;
+  }
 
   // For use as an Interrupt Service Routine where interrupts are disabled upon calling.
   void UpdateISR()
