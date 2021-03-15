@@ -131,7 +131,7 @@ private:
 
   inline void Update_(const int& input_state, const unsigned long& current_ms)
   {
-    is_debounced = edge = rise = fall = false;
+    edge = rise = fall = false;
 
     // Hysteresis:
     //   If there is no change, reset the debounce timer.
@@ -140,14 +140,21 @@ private:
     {
       last_ms = current_ms;
     }
-    else if ((current_ms - last_ms) >= DEBOUNCE_DELAY_ms)
+    else
     {
-      // Successfully debounced, so update the outputs.
-      is_debounced = true;
-      rise = input_state && !output_state;
-      fall = !input_state && output_state;
-      edge = rise || fall;
-      output_state = input_state;
+      if ((current_ms - last_ms) >= DEBOUNCE_DELAY_ms)
+      {
+        // Successfully debounced, so update the outputs.
+        is_debounced = true;
+        rise = input_state && !output_state;
+        fall = !input_state && output_state;
+        edge = rise || fall;
+        output_state = input_state;
+      }
+      else
+      {
+          is_debounced = false;
+      }
     }
   }
 };
