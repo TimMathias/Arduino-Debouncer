@@ -21,13 +21,16 @@ void setup()
 void loop()
 {
   static Debouncer button1(BUTTON_PIN, DEBOUNCE_DELAY_ms);
-  
-  button1.Update();
+  static bool previous_state = false;
 
-  if (button1.IsDebounced())
+  button1.Update();
+  bool current_state = button1.Output();
+
+  if (current_state != previous_state)
   {
     // Update the LED to show the debounced signal.
-    digitalWrite(LED_PIN, button1.Output());
+    digitalWrite(LED_PIN, current_state);
+    previous_state = current_state;
   }
 }
 ```
