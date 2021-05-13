@@ -28,7 +28,7 @@ public:
   Debouncer(const int INPUT_PIN, const unsigned long DEBOUNCE_DELAY_ms = 50)
     : INPUT_PIN(INPUT_PIN)
     , DEBOUNCE_DELAY_ms(DEBOUNCE_DELAY_ms)
-    , output_state(false)
+    , output_state(digitalRead(INPUT_PIN))
     , edge(false)
     , rise(false)
     , fall(false)
