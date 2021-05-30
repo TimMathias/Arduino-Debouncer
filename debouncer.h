@@ -21,7 +21,7 @@ private:
   volatile bool rise : 1;
   volatile bool fall : 1;
   const unsigned long DEBOUNCE_DELAY_ms;
-  volatile unsigned long last_ms;
+  volatile unsigned long previous_ms;
 
 public:
 
@@ -32,6 +32,7 @@ public:
     , edge(false)
     , rise(false)
     , fall(false)
+    , previous_ms(millis())
   {
   }
 
