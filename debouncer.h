@@ -37,7 +37,7 @@ class Debouncer
 {
 private:
 
-  const int INPUT_PIN;
+  const byte INPUT_PIN;
   volatile bool output_state : 1;
   volatile bool edge : 1;
   volatile bool rise : 1;
@@ -47,7 +47,7 @@ private:
 
 public:
 
-  Debouncer(const int INPUT_PIN, const unsigned long DEBOUNCE_DELAY_ms = 50)
+  Debouncer(const byte INPUT_PIN, const unsigned long DEBOUNCE_DELAY_ms = 50)
     : INPUT_PIN(INPUT_PIN)
     , DEBOUNCE_DELAY_ms(DEBOUNCE_DELAY_ms)
     , output_state(digitalRead(INPUT_PIN))
