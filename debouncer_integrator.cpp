@@ -33,6 +33,8 @@
 #include <util/atomic.h>
 #endif
 
+#include "debouncer_integrator.h"
+
 bool DebouncerIntegrator::Output() const
 {
 #ifdef ATOMIC_BLOCK
