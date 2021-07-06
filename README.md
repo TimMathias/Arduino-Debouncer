@@ -1,5 +1,5 @@
 # Debouncer for Arduino
-Simple debouncer for Arduino.
+Simple debouncer for Arduino that detects positive and negative edges using hysteresis or integration.
 
 ## Usage
 ### Polling
