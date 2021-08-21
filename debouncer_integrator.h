@@ -42,66 +42,66 @@ class DebouncerIntegrator
 {
 private:
 
-	const byte INPUT_PIN;
-	volatile bool output_state : 1;
-	volatile bool edge : 1;
-	volatile bool rise : 1;
-	volatile bool fall : 1;
-	const unsigned long DEBOUNCE_DELAY_ms;
-	volatile unsigned long previous_ms;
-	volatile unsigned long sum_ms;
+  const byte INPUT_PIN;
+  volatile bool output_state : 1;
+  volatile bool edge : 1;
+  volatile bool rise : 1;
+  volatile bool fall : 1;
+  const unsigned long DEBOUNCE_DELAY_ms;
+  volatile unsigned long previous_ms;
+  volatile unsigned long sum_ms;
 
 #if DEBOUNCER_REPEAT_COUNT
-	const unsigned long REPEAT_DELAY_ms;
-	volatile unsigned long previous_repeat_ms;
-	volatile unsigned long repeat_count;
+  const unsigned long REPEAT_DELAY_ms;
+  volatile unsigned long previous_repeat_ms;
+  volatile unsigned long repeat_count;
 #endif
 
 public:
 
-	DebouncerIntegrator
-	(
-		const byte INPUT_PIN
-		, const unsigned long DEBOUNCE_DELAY_ms = 50
+  DebouncerIntegrator
+  (
+    const byte INPUT_PIN
+    , const unsigned long DEBOUNCE_DELAY_ms = 50
 #if DEBOUNCER_REPEAT_COUNT
-		, const unsigned long REPEAT_DELAY_ms = 100
+    , const unsigned long REPEAT_DELAY_ms = 100
 #endif
-	)
-		: INPUT_PIN(INPUT_PIN)
-		, DEBOUNCE_DELAY_ms(DEBOUNCE_DELAY_ms)
+  )
+    : INPUT_PIN(INPUT_PIN)
+    , DEBOUNCE_DELAY_ms(DEBOUNCE_DELAY_ms)
 #if DEBOUNCER_REPEAT_COUNT
-		, REPEAT_DELAY_ms(REPEAT_DELAY_ms)
+    , REPEAT_DELAY_ms(REPEAT_DELAY_ms)
 #endif
-		, output_state(digitalRead(INPUT_PIN))
-		, edge(false)
-		, rise(false)
-		, fall(false)
-		, sum_ms(0)
-	{
+    , output_state(digitalRead(INPUT_PIN))
+    , edge(false)
+    , rise(false)
+    , fall(false)
+    , sum_ms(0)
+  {
 #if DEBOUNCER_REPEAT_COUNT
-		previous_repeat_ms =
+    previous_repeat_ms =
 #endif
-		previous_ms = millis();
-	}
+    previous_ms = millis();
+  }
 
-	bool Output() const;
-	bool Edge() const;
-	bool Rise() const;
-	bool Fall() const;
+  bool Output() const;
+  bool Edge() const;
+  bool Rise() const;
+  bool Fall() const;
 
 #if DEBOUNCER_REPEAT_COUNT
-	unsigned long RepeatCount() const;
+  unsigned long RepeatCount() const;
 #endif
 
-	// To be called from a polling loop where interrupts may or may not be enabled.
-	void Update();
+  // To be called from a polling loop where interrupts may or may not be enabled.
+  void Update();
 
-	// For use as an Interrupt Service Routine where interrupts are disabled upon calling.
-	void UpdateISR();
+  // For use as an Interrupt Service Routine where interrupts are disabled upon calling.
+  void UpdateISR();
 
 private:
 
-	void Update_(const bool& input_state, const unsigned long& current_ms);
+  void Update_(const bool& input_state, const unsigned long& current_ms);
 };
 
 #endif /* DEBOUNCER_INTEGRATOR_H */
