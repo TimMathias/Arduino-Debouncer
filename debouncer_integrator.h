@@ -59,7 +59,10 @@ private:
 
 public:
 
-	DebouncerIntegrator(const byte INPUT_PIN, const unsigned long DEBOUNCE_DELAY_ms = 50
+	DebouncerIntegrator
+	(
+		const byte INPUT_PIN
+		, const unsigned long DEBOUNCE_DELAY_ms = 50
 #if DEBOUNCER_REPEAT_COUNT
 		, const unsigned long REPEAT_DELAY_ms = 100
 #endif

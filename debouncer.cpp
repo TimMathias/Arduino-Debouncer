@@ -4,7 +4,7 @@
 
   Debounces an input using hysteresis.
   Detects rising edges, falling edges and both edges.
-  Enable the repeat count by defining DEBOUNCER_REPEAT_COUNT.
+  Enable the repeat count by defining DEBOUNCER_REPEAT_COUNT as true.
 
   MIT License
 
@@ -145,7 +145,7 @@ void Debouncer::Update_(const bool& input_state, const unsigned long& current_ms
 		repeat_count = 0;
 		previous_repeat_ms =
 #endif
-			previous_ms = current_ms;
+		previous_ms = current_ms;
 		rise = input_state && !output_state;
 		fall = !input_state && output_state;
 		edge = rise || fall;
