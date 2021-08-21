@@ -4,6 +4,7 @@
 
   Debounces an input using integration.
   Detects rising edges, falling edges and both edges.
+  Enable the repeat count by defining DEBOUNCER_REPEAT_COUNT as true.
 
   MIT License
 
@@ -33,47 +34,71 @@
 #ifndef DEBOUNCER_INTEGRATOR_H
 #define DEBOUNCER_INTEGRATOR_H
 
+#include <Arduino.h>
+
+#define DEBOUNCER_REPEAT_COUNT false
+
 class DebouncerIntegrator
 {
 private:
 
-  const byte INPUT_PIN;
-  volatile bool output_state : 1;
-  volatile bool edge : 1;
-  volatile bool rise : 1;
-  volatile bool fall : 1;
-  const unsigned long DEBOUNCE_DELAY_ms;
-  volatile unsigned long previous_ms;
-  volatile unsigned long sum_ms;
+	const byte INPUT_PIN;
+	volatile bool output_state : 1;
+	volatile bool edge : 1;
+	volatile bool rise : 1;
+	volatile bool fall : 1;
+	const unsigned long DEBOUNCE_DELAY_ms;
+	volatile unsigned long previous_ms;
+	volatile unsigned long sum_ms;
+
+#if DEBOUNCER_REPEAT_COUNT
+	const unsigned long REPEAT_DELAY_ms;
+	volatile unsigned long previous_repeat_ms;
+	volatile unsigned long repeat_count;
+#endif
 
 public:
 
-  DebouncerIntegrator(const byte INPUT_PIN, const unsigned long DEBOUNCE_DELAY_ms = 50)
-    : INPUT_PIN(INPUT_PIN)
-    , DEBOUNCE_DELAY_ms(DEBOUNCE_DELAY_ms)
-    , output_state(digitalRead(INPUT_PIN))
-    , edge(false)
-    , rise(false)
-    , fall(false)
-    , previous_ms(millis())
-    , sum_ms(0)
-  {
-  }
+	DebouncerIntegrator(const byte INPUT_PIN, const unsigned long DEBOUNCE_DELAY_ms = 50
+#if DEBOUNCER_REPEAT_COUNT
+		, const unsigned long REPEAT_DELAY_ms = 100
+#endif
+	)
+		: INPUT_PIN(INPUT_PIN)
+		, DEBOUNCE_DELAY_ms(DEBOUNCE_DELAY_ms)
+#if DEBOUNCER_REPEAT_COUNT
+		, REPEAT_DELAY_ms(REPEAT_DELAY_ms)
+#endif
+		, output_state(digitalRead(INPUT_PIN))
+		, edge(false)
+		, rise(false)
+		, fall(false)
+		, sum_ms(0)
+	{
+#if DEBOUNCER_REPEAT_COUNT
+		previous_repeat_ms =
+#endif
+		previous_ms = millis();
+	}
 
-  bool Output() const;
-  bool Edge() const;
-  bool Rise() const;
-  bool Fall() const;
+	bool Output() const;
+	bool Edge() const;
+	bool Rise() const;
+	bool Fall() const;
 
-  // To be called from a polling loop where interrupts may or may not be enabled.
-  void Update();
+#if DEBOUNCER_REPEAT_COUNT
+	unsigned long RepeatCount() const;
+#endif
 
-  // For use as an Interrupt Service Routine where interrupts are disabled upon calling.
-  void UpdateISR();
+	// To be called from a polling loop where interrupts may or may not be enabled.
+	void Update();
+
+	// For use as an Interrupt Service Routine where interrupts are disabled upon calling.
+	void UpdateISR();
 
 private:
 
-  void Update_(const bool& input_state, const unsigned long& current_ms);
+	void Update_(const bool& input_state, const unsigned long& current_ms);
 };
 
 #endif /* DEBOUNCER_INTEGRATOR_H */
