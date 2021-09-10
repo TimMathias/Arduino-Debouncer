@@ -7,8 +7,8 @@ Simple debouncer for Arduino that detects positive and negative edges using hyst
 ```c++
 #include <debouncer.h>
 
-const int BUTTON_PIN = 2;  // Pushbutton pin number.
-const int LED_PIN = 13;    // LED pin number.
+const byte BUTTON_PIN = 2;  // Pushbutton pin number.
+const byte LED_PIN = 13;    // LED pin number.
 const unsigned long DEBOUNCE_DELAY_ms = 50;  // The debounce time in milliseconds.
 
 void setup()
@@ -56,8 +56,8 @@ void loop()
 ```c++
 #include <debouncer.h>
 
-const int BUTTON_PIN = 2;  // Pushbutton pin number.
-const int LED_PIN = 13;    // LED pin number.
+const byte BUTTON_PIN = 2;  // Pushbutton pin number.
+const byte LED_PIN = 13;    // LED pin number.
 const unsigned long DEBOUNCE_DELAY_ms = 50;  // The debounce time in milliseconds.
 
 void setup()
