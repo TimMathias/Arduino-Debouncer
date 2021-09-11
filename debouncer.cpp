@@ -27,74 +27,58 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
-
+  
 */
 
 #ifdef __AVR__
 #include <util/atomic.h>
 #endif
 
+#ifndef ATOMIC_BLOCK
+  #define ATOMIC_BLOCK(x)
+#endif
+
 #include "debouncer.h"
 
 bool Debouncer::Output() const
 {
-#ifdef ATOMIC_BLOCK
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
   {
-#endif
     return output_state;
-#ifdef ATOMIC_BLOCK
   }
-#endif
 }
 
 bool Debouncer::Edge() const
 {
-#ifdef ATOMIC_BLOCK
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
   {
-#endif
     return edge;
-#ifdef ATOMIC_BLOCK
   }
-#endif
 }
 
 bool Debouncer::Rise() const
 {
-#ifdef ATOMIC_BLOCK
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
   {
-#endif
     return rise;
-#ifdef ATOMIC_BLOCK
   }
-#endif
 }
 
 bool Debouncer::Fall() const
 {
-#ifdef ATOMIC_BLOCK
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
   {
-#endif
     return fall;
-#ifdef ATOMIC_BLOCK
   }
-#endif
 }
 
 #if DEBOUNCER_REPEAT_COUNT
 unsigned long Debouncer::RepeatCount() const
 {
-#ifdef ATOMIC_BLOCK
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
   {
-#endif
     return repeat_count;
-#ifdef ATOMIC_BLOCK
   }
-#endif
 }
 #endif
 
@@ -102,16 +86,12 @@ unsigned long Debouncer::RepeatCount() const
 void Debouncer::Update()
 {
   // Temporarily disable interrupts to ensure an accurate time stamp for the sample, and that status flags are updated synchronously.
-#ifdef ATOMIC_BLOCK
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
   {
-#endif
     const bool input_state = digitalRead(INPUT_PIN);  // No interrupts will occur between here...
     const unsigned long current_ms = millis();        // ...and here, ensuring an accurate time stamp for the sample...
     Update_(input_state, current_ms);                 // ...and here, ensuring flags are updated synchronously.
-#ifdef ATOMIC_BLOCK
   }
-#endif
 }
 
 // For use as an Interrupt Service Routine where interrupts are disabled upon calling.
