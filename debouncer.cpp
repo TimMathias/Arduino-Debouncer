@@ -122,7 +122,7 @@ void Debouncer::UpdateISR()
   Update_(input_state, current_ms);
 }
 
-void Debouncer::Update_(const bool& input_state, const unsigned long& current_ms)
+void Debouncer::Update_(const bool input_state, const unsigned long& current_ms)
 {
   // Hysteresis:
   //   If there is no change, reset the debounce timer.
