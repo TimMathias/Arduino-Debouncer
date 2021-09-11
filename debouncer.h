@@ -105,7 +105,7 @@ public:
 
 private:
 
-  void Update_(const bool& input_state, const unsigned long& current_ms);
+  void Update_(const bool input_state, const unsigned long& current_ms);
 };
 
 #endif /* DEBOUNCER_H */
