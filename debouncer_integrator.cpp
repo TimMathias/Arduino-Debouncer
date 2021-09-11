@@ -122,7 +122,7 @@ void DebouncerIntegrator::UpdateISR()
   Update_(input_state, current_ms);
 }
 
-void DebouncerIntegrator::Update_(const bool& input_state, const unsigned long& current_ms)
+void DebouncerIntegrator::Update_(const bool input_state, const unsigned long& current_ms)
 {
   const unsigned long delta_ms = current_ms - previous_ms;
   previous_ms = current_ms;
